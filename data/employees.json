@@ -1,0 +1,20 @@
+[
+  {
+    "id": 2,
+    "name": "Bob Johnson",
+    "position": "Product Manager",
+    "department": "Product"
+  },
+  {
+    "id": 3,
+    "name": "Jane Doe",
+    "position": "Marketing Specialist",
+    "department": "Marketing"
+  },
+  {
+    "id": 4,
+    "name": "Ibnu",
+    "position": "Marketing Specialist",
+    "department": "Marketing"
+  }
+]

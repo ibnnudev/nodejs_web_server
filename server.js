@@ -2,10 +2,14 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const { logger } = require("./middleware/logEvents");
+const errorHandler = require("./middleware/errorHandler");
 const PORT = process.env.PORT || 3500;
 const cors = require("cors");
 
-// CORS middleware
+const rootRouter = require("./routes/root");
+const subdirRouter = require("./routes/subdir");
+const employeesRouter = require("./routes/api/employee");
+
 const whitelist = ["https://www.google.com", "http://localhost:3500"];
 const corsOptions = {
   origin: (origin, callback) => {
@@ -19,20 +23,17 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// custom middleware logger
 app.use(logger);
 
+app.use(errorHandler);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "index.html"));
-});
+app.use("/", express.static(path.join(__dirname, "public")));
+app.use("/subdir", express.static(path.join(__dirname, "public")));
 
-app.use(function (err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send(err.message);
-});
+app.use("/", rootRouter);
+app.use("/subdir", subdirRouter);
+app.use("/api/employees", employeesRouter);
 
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
