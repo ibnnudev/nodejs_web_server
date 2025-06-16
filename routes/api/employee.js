@@ -41,7 +41,7 @@ router.put("/:id", (req, res) => {
   employee.position = req.body.position || employee.position;
   employee.department = req.body.department || employee.department;
   fs.writeFileSync(
-    path.join(__dirname, "../../data/employees.json"),
+    path.join(__dirname, "../../model/employees.json"),
     JSON.stringify(data, null, 2)
   );
   res.json(employee);
